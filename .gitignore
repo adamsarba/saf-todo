@@ -1,5 +1,8 @@
 # Exclude OS X folder attributes
 .DS_Store
 
-# Exclude any PSD file
+# Exclude source files
+*.css.map
+*.scss
+*.json
 *.psd
