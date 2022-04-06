@@ -50,7 +50,7 @@ button {
   background: transparent;
 }
 button::before {
-  font-family: "Font Awesome 6 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: 1.2rem;
 }
 button:hover {
@@ -117,6 +117,9 @@ button:hover {
 .header--wrapper button#removeLast:hover::before {
   color: var(--color--yellow);
 }
+.header--wrapper button#clearAll {
+  padding-right: 1px;
+}
 .header--wrapper button#clearAll::before {
   content: "\f2ed";
 }
@@ -144,12 +147,12 @@ input[type=text]:focus {
 button[type=submit] {
   width: 50px;
   margin: 0;
-  padding: 0;
+  padding: 0 1px 0 0;
   background: transparent;
   text-align: right;
 }
 button[type=submit]::before {
-  content: "+";
+  content: "\f0fe";
 }
 button[type=submit]:hover::before {
   color: var(--color--green);
@@ -223,34 +226,31 @@ li.done button.deleteBtn {
 }
 li button.doneBtn,
 li button.deleteBtn {
-  font-family: "Font Awesome 6 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: 1.2rem;
   position: absolute;
-  top: 12px;
+  top: 15px;
   /* top: 50%; */
   /* transform: translateY(-50%); */
 }
 li button.doneBtn {
-  top: 15px;
   left: var(--li--padding);
 }
 li button.doneBtn:hover {
   color: var(--color--green);
 }
 li button.doneBtn::before {
-  content: "\f00c";
+  content: "\f058";
   left: var(--li--padding);
 }
 li button.deleteBtn {
-  top: 13px;
   right: var(--li--padding);
-  font-size: 1.4rem;
   opacity: 0;
   transition: all 150ms linear;
 }
 li button.deleteBtn::after {
   color: var(--color--grey);
-  content: "\f00d";
+  content: "\f057";
   right: var(--li--padding);
   cursor: pointer;
 }
@@ -266,7 +266,7 @@ li:hover {
   background: #f9f9f9;
 }
 li:hover.done::after {
-  width: calc(100% - 100px + var(--li--padding) + 5px);
+  width: calc(100% - 100px + var(--li--padding));
 }
 li:hover button.deleteBtn:hover::after {
   color: var(--color--red);
