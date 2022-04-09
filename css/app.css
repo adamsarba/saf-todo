@@ -103,7 +103,7 @@ button:hover {
   visibility: hidden;
 }
 .header--wrapper .btns button {
-  color: #757575;
+  color: #b0b0b0;
 }
 .header--wrapper .btns.visible {
   visibility: visible;

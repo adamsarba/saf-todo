@@ -1,148 +1,190 @@
 window.addEventListener('load', function(){
 
   // Get DOM elements
-  const form     = document.querySelector('form')
-  const input    = document.querySelector('[name="todo"]')
-  const todoList = document.getElementById('todos')
-  const todoData = []
-  const doneData = []
+  const form      = document.querySelector('form')
+  const input     = document.querySelector('[name="todo"]')
+  const todoList  = document.getElementById('todos')
 
-  const btns = document.querySelector('.btns')
-  const clearAll = document.getElementById('clearAll')
+  const todoData  = []
+  const doneData  = []
+  const samples   = ["Apple", "Orange", "Grapes", "Melon", "Watermelon", "Tangerine", "Lemon", "Banana", "Pineapple", "Mango"]
 
-  setTimeout(() => {
-    input.focus()
-  }, 1000)
+  const btns      = document.querySelector('.btns')
+  const clearBtn  = document.getElementById('clearAll')
+  const sampleBtn = document.getElementById('sample')
+
+  setTimeout(() => { input.focus() }, 1000)
 
 
   // Side Effects / Lifecycle
+  let index = 0
+
   const existingTodos = JSON.parse(localStorage.getItem('todos')) || []
   const existingDones = JSON.parse(localStorage.getItem('dones')) || []
 
-  let itemId = 0;
+  if (existingTodos > [] ) {
+    console.log('Existing Todos:')
+    existingTodos.forEach(todo => {
+      addExisting(todo)
+      console.log('✔︎ ' + todo)
+    });
+  }
 
-  existingTodos.forEach(item => {
-    itemId += 1
-    addExisting(item)
-    // console.log('✔︎ ' + itemId + ' ' + item)
-  });
-  addDone() || existingDones
+  if (existingDones > [] ) {
+    existingDones.forEach(done => {
+      addDone(done)
+    });
+  }
 
-  // Funtions
 
-  function addDone() {
-    existingDones.forEach(id => {
-      const li = document.getElementById(id)
-      li.classList.add('done')
+
+  // Adding Functions
+
+  function sampleData() {
+    samples.forEach(sample => {
+      const li  = document.createElement('li')
+      todoList.appendChild(li)
+      li.innerHTML = sample
+      li.classList.add('item')
+      addBtns(li)
+
+      todoData.push(sample)
+      localStorage.setItem('todos', JSON.stringify(todoData))
+
+      doneData.push('unchecked')
+      localStorage.setItem('dones', JSON.stringify(doneData))
     });
   }
 
   function addExisting(todoText) {
-    btns.classList.add('visible')
-
-    const li = document.createElement('li')
-    li.classList.add('item')
-    li.setAttribute('id', itemId);
-    li.innerHTML = todoText
+    const li  = document.createElement('li')
     todoList.appendChild(li)
-
-    // li.addEventListener('click', doneTodo)
-    const doneBtn = document.createElement('button')
-    doneBtn.classList.add('doneBtn')
-    li.appendChild(doneBtn)
-    doneBtn.addEventListener('click', doneTodo)
-
-    const deleteBtn = document.createElement('button')
-    deleteBtn.classList.add('deleteBtn')
-    li.appendChild(deleteBtn)
-
-    deleteBtn.addEventListener('click', deleteTodo)
+    li.innerHTML = todoText
+    li.classList.add('item')
+    addBtns(li)
 
     todoData.push(todoText)
     localStorage.setItem('todos', JSON.stringify(todoData))
+  }
+
+  function addDone(i) {
+    if ( !isNaN(i) ) {
+      const li = document.querySelector('#todos li:nth-child(' + i + ')');
+      li.classList.add('done')
+
+      doneData.push(i)
+      localStorage.setItem('dones', JSON.stringify(doneData))
+    } else {
+      doneData.push('unchecked')
+      localStorage.setItem('dones', JSON.stringify(doneData))
+    }
   }
 
   function addTodo(todoText) {
-    itemId += 1
-
-    btns.classList.add('visible')
-
-    const li = document.createElement('li')
+    const li  = document.createElement('li')
+    todoList.appendChild(li)
+    li.innerHTML = todoText
     li.classList.add('item')
     li.classList.add('new')
-    li.setAttribute('id', itemId);
-    li.innerHTML = todoText
-    todoList.appendChild(li)
-
-    // li.addEventListener('click', doneTodo)
-    const doneBtn = document.createElement('button')
-    doneBtn.classList.add('doneBtn')
-    li.appendChild(doneBtn)
-    doneBtn.addEventListener('click', doneTodo)
-
-    const deleteBtn = document.createElement('button')
-    deleteBtn.classList.add('deleteBtn')
-    li.appendChild(deleteBtn)
-    deleteBtn.addEventListener('click', deleteTodo)
-
-    // console.log('#' + itemId + ' ✔︎ ' + todoText)
+    addBtns(li)
 
     todoData.push(todoText)
     localStorage.setItem('todos', JSON.stringify(todoData))
+
+    doneData.push('unchecked')
+    localStorage.setItem('dones', JSON.stringify(doneData))
+
     input.value = ''
     input.focus()
+
+    console.log('✔︎ ' + todoText)
   }
 
-  // function clearLast() {
-  //   const lastTodo = todoList.lastChild
-  //
-  //   lastTodo.classList.add('remove')
-  //   setTimeout(() => {
-  //     lastTodo.remove()
-  //   }, 300)
-  //
-  //   todoData.pop()
-  //   localStorage.setItem('todos', JSON.stringify(todoData))
-  // }
+  function doneTodo() {
+    parent = this.parentElement
+    var index = Array.from(parent.parentNode.children).indexOf(parent)
+    var id = index + 1
+
+    if (!parent.classList.contains('done')) {
+      parent.classList.add('done')
+      console.log( '✔︎ Completed item: #' + id )
+
+      doneData.splice(index, 1, id)
+      localStorage.setItem('dones', JSON.stringify(doneData))
+    } else {
+      parent.classList.remove('done')
+      console.log( '⨯ Unchecked item: #' + id )
+
+      doneData.splice(index, 1, 'unchecked')
+      localStorage.setItem('dones', JSON.stringify(doneData))
+    }
+  }
+
+
+
+  // Deleteing Functions
+
+  function deleteTodo() {
+    var parent = this.parentElement
+
+    parent.classList.add('remove')
+    setTimeout(() => {
+      parent.remove()
+    }, 300)
+
+    console.log('\nPrevious number of items: ' + todoList.childElementCount);
+
+    var index = Array.from(parent.parentNode.children).indexOf(parent)
+    var id = index + 1
+    console.log( '⨯ Deleted item: #' + id )
+
+    todoData.splice(index, 1)
+    localStorage.setItem('todos', JSON.stringify(todoData))
+
+    for (let i = 0; i < todoList.childElementCount; i++) {
+      numberOfItems = i
+    }
+    console.log('Current number of items: ' + numberOfItems + '\n\n')
+
+    // console.log(todoList.children[i]);
+  }
 
   function removeAll() {
+    // Other method
     // while (todoList.firstChild) {
     //   todoList.removeChild(todoList.firstChild);
     // }
     todoList.innerHTML = ''
-
     localStorage.clear();
     window.location.reload(true); // bug fix
   }
 
-  function deleteTodo() {
-    this.parentElement.classList.add('remove')
-    setTimeout(() => {
-      this.parentElement.remove()
-    }, 300)
 
-    itemId = this.parentElement.id
-    idx = itemId - 1
-    todoData.splice(idx, 1)
-    // console.log('\nTodo #' + itemId + ' deleted')
 
-    localStorage.setItem('todos', JSON.stringify(todoData))
+  // UI
+
+  // function createEl(text) {
+  //   const li  = document.createElement('li')
+  //   todoList.appendChild(li)
+  //   li.innerHTML = text
+  //   li.classList.add('item')
+  // }
+
+  function addBtns(i) {
+    const doneBtn = document.createElement('button')
+    doneBtn.classList.add('doneBtn')
+    i.appendChild(doneBtn)
+    doneBtn.addEventListener('click', doneTodo)
+
+    const deleteBtn = document.createElement('button')
+    deleteBtn.classList.add('deleteBtn')
+    i.appendChild(deleteBtn)
+    deleteBtn.addEventListener('click', deleteTodo)
+
+    btns.classList.add('visible')
   }
 
-  function doneTodo() {
-    itemId = this.parentElement.id
-    idx = itemId - 1
 
-    if (!this.parentElement.classList.contains('done')) {
-      this.parentElement.classList.add('done')
-      doneData.push(itemId)
-      localStorage.setItem('dones', JSON.stringify(doneData))
-    } else {
-      this.parentElement.classList.remove('done')
-      doneData.splice(idx, 1)
-      localStorage.setItem('dones', JSON.stringify(doneData))
-    }
-  }
 
   // Events
   form.onsubmit = (event) => {
@@ -150,32 +192,7 @@ window.addEventListener('load', function(){
     addTodo(input.value)
   }
 
-  // removeLast.addEventListener('click', clearLast)
-  clearAll.addEventListener('click', removeAll)
-
-  // To do:
-  // - icons and favicon fix
-  // - done and delete fix
-  // - dark mode
-  // - import from file
-
-  // document.getElementById('import').onclick = function() {
-  // 	var files = document.getElementById('selectFiles').files;
-  //   console.log(files);
-  //   if (files.length <= 0) {
-  //     return false;
-  //   }
-  //
-  //   var fr = new FileReader();
-  //
-  //   fr.onload = function(e) {
-  //   console.log(e);
-  //     var result = JSON.parse(e.target.result);
-  //
-  //     document.getElementById('todos').innerHTML = result
-  //   }
-  //
-  //   fr.readAsText(files.item(0));
-  // };
+  sampleBtn.addEventListener('click', sampleData)
+  clearBtn.addEventListener('click', removeAll)
 
 });
