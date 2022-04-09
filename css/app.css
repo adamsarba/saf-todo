@@ -296,5 +296,15 @@ li button.deleteBtn:focus {
     opacity: 0;
   }
 }
+#sample {
+  display: block;
+  margin: 0 auto;
+  padding: 0 2px;
+  color: #fff;
+  background: #000;
+}
+#sample:hover {
+  background: var(--color--green);
+}
 
 /*# sourceMappingURL=app.css.map */
