@@ -1,8 +1,8 @@
-window.addEventListener('load', function(){
+window.addEventListener('load', function() {
 
   // Get DOM elements
   const form      = document.querySelector('form')
-  const input     = document.querySelector('[name="todo"]')
+  const input     = document.querySelector('[name="new_todo"]')
   const todoList  = document.getElementById('todos')
 
   const todoData  = []
@@ -10,10 +10,10 @@ window.addEventListener('load', function(){
   const samples   = ["Apple", "Orange", "Grapes", "Melon", "Watermelon", "Tangerine", "Lemon", "Banana", "Pineapple", "Mango"]
 
   const btns      = document.querySelector('.btns')
-  const clearBtn  = document.getElementById('clearAll')
+  const clearLast = document.getElementById('clearLast')
+  const clearAll  = document.getElementById('clearAll')
   const sampleBtn = document.getElementById('sample')
 
-  setTimeout(() => { input.focus() }, 1000)
 
 
   // Side Effects / Lifecycle
@@ -38,7 +38,7 @@ window.addEventListener('load', function(){
 
 
 
-  // Adding Functions
+  // Functions
 
   function sampleData() {
     samples.forEach(sample => {
@@ -94,6 +94,12 @@ window.addEventListener('load', function(){
     doneData.push('unchecked')
     localStorage.setItem('dones', JSON.stringify(doneData))
 
+    addBtn = document.querySelector('[type="submit"]')
+    addBtn.classList.add('added')
+    setTimeout(() => {
+      addBtn.classList.remove('added')
+    }, 600)
+
     input.value = ''
     input.focus()
 
@@ -120,9 +126,43 @@ window.addEventListener('load', function(){
     }
   }
 
+  function editTodo() {
+    const el = this.parentElement
+    const currentValue = el.innerText
 
+    el.classList.add('active')
+    el.innerHTML = '<input id="edit_todo" type="text" name="edit_todo">'
 
-  // Deleteing Functions
+    const deleteBtn = document.createElement('button')
+    deleteBtn.classList.add('deleteBtn')
+    el.appendChild(deleteBtn)
+    deleteBtn.addEventListener('click', deleteTodo)
+
+    const editInput = document.getElementById('edit_todo')
+    editInput.value = currentValue
+    editInput.focus()
+
+    // TBC
+    // var index = Array.from(parent.parentNode.children).indexOf(parent)
+    // var id = index + 1
+  }
+
+  function deleteLast() {
+    const lastTodo = todoList.lastChild
+
+    lastTodo.classList.add('remove')
+    setTimeout(() => {
+      lastTodo.remove()
+    }, 600)
+
+    input.focus()
+
+    todoData.pop()
+    localStorage.setItem('todos', JSON.stringify(todoData))
+
+    doneData.pop()
+    localStorage.setItem('dones', JSON.stringify(doneData))
+  }
 
   function deleteTodo() {
     var parent = this.parentElement
@@ -149,7 +189,7 @@ window.addEventListener('load', function(){
     // console.log(todoList.children[i]);
   }
 
-  function removeAll() {
+  function deleteAll() {
     // Other method
     // while (todoList.firstChild) {
     //   todoList.removeChild(todoList.firstChild);
@@ -176,6 +216,11 @@ window.addEventListener('load', function(){
     i.appendChild(doneBtn)
     doneBtn.addEventListener('click', doneTodo)
 
+    const editBtn = document.createElement('button')
+    editBtn.classList.add('editBtn')
+    i.appendChild(editBtn)
+    editBtn.addEventListener('click', editTodo)
+
     const deleteBtn = document.createElement('button')
     deleteBtn.classList.add('deleteBtn')
     i.appendChild(deleteBtn)
@@ -193,6 +238,8 @@ window.addEventListener('load', function(){
   }
 
   sampleBtn.addEventListener('click', sampleData)
-  clearBtn.addEventListener('click', removeAll)
+
+  clearLast.addEventListener('click', deleteLast)
+  clearAll.addEventListener('click', deleteAll)
 
 });
