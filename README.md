@@ -6,9 +6,11 @@ Just run it in your browser. Simple As F*uck!
 
 ### To add:
 
-- Dark Mode
-- Edit Function
+- Dark mode
+- Edit the item
+- Flag the item
+- Move items
 
-### Fixes:
+### To fix:
 
-- Item Icons on Safari
+- Item icons on Safari
