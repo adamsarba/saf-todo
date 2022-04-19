@@ -21,6 +21,7 @@
   --li--padding:        15px;
   --transition--duration: 300ms;
 }
+$mobile: 425px;
 
 // @media (prefers-color-scheme: dark) {
 //   :root {
@@ -81,6 +82,10 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (max-width: $mobile) {
+    padding-top: 0;
+    padding-bottom: 60px;
+  }
 }
 
 .wrapper {
@@ -90,7 +95,7 @@ button {
   border-radius: 32px;
   /* background: #fafafa; */
   box-shadow: 0 15px 30px rgb(0,0,0,.1);
-  @media (max-width: 425px) {
+  @media (max-width: $mobile) {
     padding: 20px 15px 20px;
   }
   @media (prefers-color-scheme: dark) {
@@ -110,7 +115,7 @@ button {
     margin-top: 0;
     margin-bottom: 0;
     font-weight: 900;
-    @media (max-width: 425px) {
+    @media (max-width: $mobile) {
       font-size: 1.6rem;
     }
     span {
@@ -238,6 +243,10 @@ li {
   min-height: 50.5px; // 49px
   transition: all 150ms ease-in-out;
 
+  @media (max-width: $mobile) {
+    border-radius: 0;
+  }
+
   &.new {
     animation: fadeIn 600ms ease-in-out;
   }
@@ -345,6 +354,9 @@ li {
     button.deleteBtn:hover::after {
       color: var(--color--red);
     }
+    @media (max-width: $mobile) {
+      background: none;
+    }
   }
 
   &:hover button.deleteBtn,
@@ -385,12 +397,15 @@ li {
   }
   &.active {
     background: var(--color--yellow);
-    input#edit_todo {
+    input[id*="edit_todo"] {
       width: 100%;
       height: 28px;
     }
     button.deleteBtn::after {
       color: var(--color--red)
+    }
+    @media (max-width: $mobile) {
+      border-radius: 0
     }
   }
 

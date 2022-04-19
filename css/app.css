@@ -69,6 +69,12 @@ button:hover {
   justify-content: center;
   align-items: center;
 }
+@media (max-width: 425px) {
+  .container {
+    padding-top: 0;
+    padding-bottom: 60px;
+  }
+}
 
 .wrapper {
   width: 100%;
@@ -205,6 +211,11 @@ li {
   min-height: 50.5px;
   transition: all 150ms ease-in-out;
 }
+@media (max-width: 425px) {
+  li {
+    border-radius: 0;
+  }
+}
 li.new {
   animation: fadeIn 600ms ease-in-out;
 }
@@ -290,6 +301,11 @@ li:hover.done::after {
 li:hover button.deleteBtn:hover::after {
   color: var(--color--red);
 }
+@media (max-width: 425px) {
+  li:hover {
+    background: none;
+  }
+}
 li:hover button.deleteBtn,
 li button.deleteBtn:focus, li:hover button.editBtn,
 li button.editBtn:focus, li:hover button.saveBtn,
@@ -323,12 +339,17 @@ li button.saveBtn:hover::after {
 li.active {
   background: var(--color--yellow);
 }
-li.active input#edit_todo {
+li.active input[id*=edit_todo] {
   width: 100%;
   height: 28px;
 }
 li.active button.deleteBtn::after {
   color: var(--color--red);
+}
+@media (max-width: 425px) {
+  li.active {
+    border-radius: 0;
+  }
 }
 
 @keyframes fadeIn {

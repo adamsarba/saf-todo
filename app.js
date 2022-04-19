@@ -133,12 +133,16 @@ window.addEventListener('load', function() {
     const el = this.parentElement
     const currentValue = el.innerText
 
+    var index = Array.from(el.parentNode.children).indexOf(el)
+    var id = index + 1
+    var idName = 'edit_todo-' + id
+
     if (el.classList.contains('done')) {
       el.classList.remove('done')
     }
 
     el.classList.add('active')
-    el.innerHTML = '<input id="edit_todo" type="text" name="edit_todo">'
+    el.innerHTML = '<input id="' + idName + '" type="text" name="edit_todo">'
 
     const saveBtn = document.createElement('button')
     saveBtn.classList.add('saveBtn')
@@ -150,7 +154,7 @@ window.addEventListener('load', function() {
     el.appendChild(deleteBtn)
     deleteBtn.addEventListener('click', deleteTodo)
 
-    const editInput = document.getElementById('edit_todo')
+    const editInput = document.getElementById(idName)
     editInput.value = currentValue
     editInput.focus()
 
@@ -163,7 +167,11 @@ window.addEventListener('load', function() {
 
   function saveTodo() {
     const li = this.parentElement
-    const editInput = document.getElementById('edit_todo')
+    var index = Array.from(li.parentNode.children).indexOf(li)
+    var id = index + 1
+    var idName = 'edit_todo-' + id
+
+    const editInput = document.getElementById(idName)
     const newValue = editInput.value
 
     li.innerHTML = newValue
@@ -183,7 +191,6 @@ window.addEventListener('load', function() {
     setTimeout(() => {
       lastTodo.remove()
     }, 600)
-    input.focus()
 
     todoData.pop()
     localStorage.setItem('todos', JSON.stringify(todoData))

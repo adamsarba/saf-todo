@@ -7,7 +7,6 @@ Just run it in your browser. Simple As F*uck!
 ### To add:
 
 - Dark mode
-- Edit the item
 - Flag the item
 - Move items
 
