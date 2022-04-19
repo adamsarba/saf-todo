@@ -1,0 +1,436 @@
+// @use 'core.scss';
+// @use 'form.scss';
+// @use 'list.scss';
+
+/* Copyright © Adam Sarba */
+
+* {
+  box-sizing: border-box;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+}
+
+:root {
+  --text:               #000;
+  --bg:                 #fff;
+  --color--green:       #09a777;
+  --color--red:         #e03130;
+  --color--yellow:      #ffd43b;
+  --color--grey:        #b0b0b0;
+  --color--light_grey:  #e7e7e7;
+  --color--hover:       #f9f9f9;
+  --li--padding:        15px;
+  --transition--duration: 300ms;
+}
+
+// @media (prefers-color-scheme: dark) {
+//   :root {
+//     --text: #fff;
+//     --bg: #000;
+//   }
+// }
+
+::selection {
+  // color: red;
+  background: var(--color--light_grey);
+}
+::-moz-selection {
+  // color: red;
+  background: var(--color--light_grey);
+}
+
+body {
+  margin: 0;
+  padding: 15px;
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+small {
+  position: absolute;
+  bottom: 30px;
+  width: calc(100% - 2* 15px);
+  text-align: center;
+  font-size: .8rem;
+  color: var(--color--grey);
+}
+
+button,
+input {
+  border: 0;
+}
+
+button {
+  width: auto;
+  padding: 0;
+  background: transparent;
+
+  &::before {
+    font-family: "Font Awesome 6 Free";
+    font-size: 1.2rem;
+  }
+  &:hover {
+    cursor: pointer !important;
+  }
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 420px;
+  padding: 30px 30px 20px;
+  border-radius: 32px;
+  /* background: #fafafa; */
+  box-shadow: 0 15px 30px rgb(0,0,0,.1);
+  @media (max-width: 425px) {
+    padding: 20px 15px 20px;
+  }
+  @media (prefers-color-scheme: dark) {
+    // box-shadow: 0 15px 50px #222;
+  }
+}
+
+.header--wrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+
+  h1 {
+    width: 70%;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: 900;
+    @media (max-width: 425px) {
+      font-size: 1.6rem;
+    }
+    span {
+      white-space: nowrap;
+    }
+  }
+
+  .btns {
+    width: 30%;
+    text-align: right;
+    min-width: 76px;
+    button {
+      color: #b0b0b0;
+    }
+    visibility: hidden;
+    // opacity: 0;
+    // transition: all 800ms linear;
+    &.visible {
+      visibility: visible;
+      // opacity: 1;
+    }
+  }
+
+  button#clearLast {
+    margin-right: 15px;
+    &::before {
+      font-weight: 400;
+      content: "\f146";
+      // font-weight: 600;
+      // content: "\f068";
+    }
+    &:hover::before {
+      color: var(--color--yellow)
+    }
+  }
+  button#clearAll {
+    padding-right: 1px;
+    &::before {
+      content: "\f2ed";
+    }
+    &:hover::before {
+      color: var(--color--red)
+    }
+  }
+}
+
+//
+// FORM
+//
+
+.input--wrapper {
+  display: flex;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #000;
+}
+
+input[type="text"] {
+  width: calc(100%);
+  height: 50px;
+  padding: 0;
+  font-size: 1.4rem;
+  background: transparent;
+
+  &:focus {
+    outline: none
+  }
+}
+
+button[type="submit"] {
+  width: 50px;
+  margin: 0;
+  padding: 0 1px 0 0;
+  background: transparent;
+  text-align: right;
+
+  &::before {
+    content: "\f0fe";
+  }
+  &:hover::before {
+    color: var(--color--green);
+  }
+  &.added::before {
+    animation: added 600ms ease-in-out;
+  }
+}
+
+@keyframes added {
+  0% {
+    color: inherit
+  }
+  50% {
+    color: var(--color--green);
+  }
+}
+
+
+//
+// LIST
+//
+
+ul {
+  padding-left: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: calc(var(--li--padding) * -1);
+  margin-right: calc(var(--li--padding) * -1);
+  list-style: none;
+  font-size: 1.4rem;
+  line-height: 1.3;
+
+  max-height: 430px;
+  overflow-y: scroll;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+}
+
+li {
+  padding: 10px 80px 10px calc(var(--li--padding) + 25px);
+  border-radius: 24px;
+  position: relative;
+  min-height: 50.5px; // 49px
+  transition: all 150ms ease-in-out;
+
+  &.new {
+    animation: fadeIn 600ms ease-in-out;
+  }
+  &.remove {
+    animation: fadeOut 600ms ease-in-out;
+  }
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    // left: -50px;
+    // width: calc(100% - 4* 25px + var(--li--padding) + 5px);
+    width: 0;
+    height: 2px;
+    border-radius: 10px;
+    opacity: 0;
+    background: var(--color--green);
+    transition: all var(--transition--duration) ease-in-out
+  }
+  &.done {
+    color: var(--color--light_grey);
+    background: transparent;
+    &:hover {
+      background: transparent;
+    }
+    &::after {
+      // left: calc(25px + var(--li--padding));
+      width: calc(100% - 3* 25px + var(--li--padding) + 5px);
+      opacity: 1;
+      background: var(--color--light_grey);
+    }
+    button.doneBtn {
+      color: var(--color--green) !important;
+    }
+    button.deleteBtn {
+      z-index: 999;
+      background: #fff;
+      transition: all var(--transition--duration) ease-in;
+    }
+  }
+
+  // button.doneBtn,
+  // button.deleteBtn
+  button {
+    font-family: "Font Awesome 6 Free";
+    font-size: 1.2rem;
+    position: absolute;
+    top: 15px;
+    /* top: 50%; */
+    /* transform: translateY(-50%); */
+  }
+
+  button.doneBtn {
+    // top: 15px;
+    left: var(--li--padding);
+
+    &:hover {
+      color: var(--color--green)
+    }
+
+    &::before {
+      content: "\f058";
+      left: var(--li--padding);
+    }
+  }
+
+  button.deleteBtn {
+    // top: 13px;
+    right: var(--li--padding);
+    // font-size: 1.2rem;
+    opacity: 0;
+    transition: all 150ms linear;
+
+    &::after {
+      color: var(--color--grey);
+      content: "\f057";
+      right: var(--li--padding);
+      cursor: pointer;
+    }
+  }
+  @media (hover: none) and (pointer: coarse) {
+    &.done {
+      &::after {
+        // left: calc(25px + var(--li--padding));
+        width: calc(100% - 4* 25px + var(--li--padding) + 5px);
+      }
+    }
+    button.deleteBtn {
+      opacity: 1
+    }
+  }
+
+  &:hover {
+    background: var(--color--hover);
+    // cursor: pointer;
+    &.done {
+      &::after {
+        // left: calc(25px + var(--li--padding));
+        width: calc(100% - 5.4* 25px + var(--li--padding));
+      }
+    }
+    button.deleteBtn:hover::after {
+      color: var(--color--red);
+    }
+  }
+
+  &:hover button.deleteBtn,
+  button.deleteBtn:focus,
+  &:hover button.editBtn,
+  button.editBtn:focus,
+  &:hover button.saveBtn,
+  button.saveBtn:focus {
+    opacity: 1;
+  }
+
+  // Editing
+  button.editBtn,
+  button.saveBtn {
+    right: calc(var(--li--padding) + 31px);
+    opacity: 0;
+    transition: all 150ms linear;
+
+    &::after {
+      color: var(--color--grey);
+      content: "\f044";
+      right: var(--li--padding);
+      cursor: pointer;
+    }
+
+    &:hover::after {
+      color: black
+    }
+  }
+  button.saveBtn {
+    &::after {
+      color: black;
+      content: "\f0c7"
+    }
+    &:hover::after {
+      color: var(--color--green);
+    }
+  }
+  &.active {
+    background: var(--color--yellow);
+    input#edit_todo {
+      width: 100%;
+      height: 28px;
+    }
+    button.deleteBtn::after {
+      color: var(--color--red)
+    }
+  }
+
+}
+
+@keyframes fadeIn {
+  0% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes fadeOut {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+}
+
+#sample {
+  display: block;
+  margin: 0 auto;
+  padding: 5px 10px;
+  border: 1px solid var(--color--light_grey);
+  border-radius: 12px;
+  color: var(--color--grey);
+  // background: var(--color--light_grey);
+  transition: all 150ms ease-in-out;
+  &:hover {
+    color: #fff;
+    background: var(--color--green);
+    border: 1px solid var(--color--green);
+  }
+}

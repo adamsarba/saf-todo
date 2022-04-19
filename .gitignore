@@ -2,7 +2,10 @@
 .DS_Store
 
 # Exclude source files
-*.css.map
-*.scss
 *.json
 *.psd
+
+# Exlude unfinished files
+core.scss
+form.scss
+list.scss
