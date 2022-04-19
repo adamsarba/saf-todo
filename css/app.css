@@ -287,22 +287,33 @@ li:hover button.deleteBtn:hover::after {
 }
 li:hover button.deleteBtn,
 li button.deleteBtn:focus, li:hover button.editBtn,
-li button.editBtn:focus {
+li button.editBtn:focus, li:hover button.saveBtn,
+li button.saveBtn:focus {
   opacity: 1;
 }
-li button.editBtn {
+li button.editBtn,
+li button.saveBtn {
   right: calc(var(--li--padding) + 31px);
   opacity: 0;
   transition: all 150ms linear;
 }
-li button.editBtn::after {
+li button.editBtn::after,
+li button.saveBtn::after {
   color: var(--color--grey);
   content: "\f044";
   right: var(--li--padding);
   cursor: pointer;
 }
-li button.editBtn:hover::after {
+li button.editBtn:hover::after,
+li button.saveBtn:hover::after {
   color: black;
+}
+li button.saveBtn::after {
+  color: black;
+  content: "\f0c7";
+}
+li button.saveBtn:hover::after {
+  color: var(--color--green);
 }
 li.active {
   background: var(--color--yellow);
@@ -341,6 +352,7 @@ li.active button.deleteBtn::after {
   border: 1px solid var(--color--light_grey);
   border-radius: 12px;
   color: var(--color--grey);
+  transition: all 150ms ease-in-out;
 }
 #sample:hover {
   color: #fff;
