@@ -83,19 +83,6 @@ window.addEventListener('load', function() {
     localStorage.setItem('todos', JSON.stringify(todoData))
   }
 
-  // function addDone(i) {
-  //   if ( !isNaN(i) ) {
-  //     const li = document.querySelector('#todos li:nth-child(' + i + ')');
-  //     li.classList.add('done')
-  //
-  //     doneData.push(i)
-  //     localStorage.setItem('dones', JSON.stringify(doneData))
-  //   } else {
-  //     doneData.push('unchecked')
-  //     localStorage.setItem('dones', JSON.stringify(doneData))
-  //   }
-  // }
-
   function addTodo(todoText) {
     var item = { "text": todoText, "isDone": false}
     const li  = document.createElement('li')
