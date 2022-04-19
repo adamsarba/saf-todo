@@ -133,8 +133,6 @@ window.addEventListener('load', function() {
     const el = this.parentElement
     const currentValue = el.innerText
 
-    console.log(el.classList)
-
     if (el.classList.contains('done')) {
       el.classList.remove('done')
     }
@@ -161,20 +159,21 @@ window.addEventListener('load', function() {
         saveBtn.click();
       }
     });
-
-    // TBC
-    // var index = Array.from(parent.parentNode.children).indexOf(parent)
-    // var id = index + 1
   }
 
   function saveTodo() {
     const li = this.parentElement
     const editInput = document.getElementById('edit_todo')
+    const newValue = editInput.value
 
-    li.innerHTML = editInput.value
+    li.innerHTML = newValue
     li.classList.add('item')
     li.classList.remove('active')
     addBtns(li)
+
+    var index = Array.from(li.parentNode.children).indexOf(li)
+    todoData[index].text = newValue
+    localStorage.setItem('todos', JSON.stringify(todoData))
   }
 
   function deleteLast() {
@@ -191,16 +190,16 @@ window.addEventListener('load', function() {
   }
 
   function deleteTodo() {
-    var parent = this.parentElement
-    var index = Array.from(parent.parentNode.children).indexOf(parent)
+    var item = this.parentElement
+    var index = Array.from(item.parentNode.children).indexOf(item)
     var id = index + 1
 
     console.log( '\n⨯ Deleted item: #' + id )
     console.log('Previous number of items: ' + todoList.childElementCount);
 
-    parent.classList.add('remove')
+    item.classList.add('remove')
     setTimeout(() => {
-      parent.remove()
+      item.remove()
 
       console.log('Current number of items: ' + todoList.childElementCount + '\n\n')
     }, 300)
