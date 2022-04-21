@@ -23,13 +23,6 @@
 }
 $mobile: 425px;
 
-// @media (prefers-color-scheme: dark) {
-//   :root {
-//     --text: #fff;
-//     --bg: #000;
-//   }
-// }
-
 ::selection {
   // color: red;
   background: var(--color--light_grey);
@@ -102,9 +95,6 @@ button {
   box-shadow: 0 15px 30px rgb(0,0,0,.1);
   @media (max-width: $mobile) {
     padding: 20px 15px 20px;
-  }
-  @media (prefers-color-scheme: dark) {
-    // box-shadow: 0 15px 50px #222;
   }
 }
 
@@ -231,7 +221,8 @@ ul {
   font-size: 1.4rem;
   line-height: 1.3;
 
-  max-height: 430px;
+  // max-height: 430px;
+  max-height: 50vh;
   overflow-y: scroll;
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
@@ -295,7 +286,6 @@ li {
     }
     button.deleteBtn {
       z-index: 999;
-      background: #fff;
       transition: all var(--transition--duration) ease-in;
     }
   }
@@ -443,12 +433,16 @@ li {
   }
 }
 
-#sample {
-  display: block;
+.footer {
+  text-align: center;
+}
+
+#sample,
+#toggle {
+  display: inline-block;
   margin: 0 auto;
   padding: 5px 10px;
   border: 1px solid var(--color--light_grey);
-  background: #fff;
   border-radius: 12px;
   color: var(--color--grey);
   // background: var(--color--light_grey);
@@ -458,4 +452,62 @@ li {
     background: var(--color--green);
     border: 1px solid var(--color--green);
   }
+}
+
+
+
+// Dark Mode
+
+body.mode__dark {
+  --text: #e7e7e7;
+  --bg: #121212;
+
+  --color--grey:        #888;
+  --color--light_grey:  #888;
+  --color--hover:       rgb(255,255,255,.1);
+
+  .wrapper {
+      box-shadow: 0 15px 30px rgb(0,0,0,.25);
+    }
+
+    .input--wrapper {
+      border-bottom: 2px solid var(--color--grey);
+    }
+
+    .doneBtn {
+      color: var(--color--grey);
+    }
+
+    button[type=submit] {
+      color: #b0b0b0;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+
+  :root {
+    --text: #e7e7e7;
+    --bg: #121212;
+
+    --color--grey:        #888;
+    --color--light_grey:  #888;
+    --color--hover:       rgb(255,255,255,.1);
+  }
+
+  .wrapper {
+    box-shadow: 0 15px 30px rgb(0,0,0,.25);
+  }
+
+  .input--wrapper {
+    border-bottom: 2px solid var(--color--grey);
+  }
+
+  .doneBtn {
+    color: var(--color--grey);
+  }
+
+  button[type=submit] {
+    color: #b0b0b0;
+  }
+
 }

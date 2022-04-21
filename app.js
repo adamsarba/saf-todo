@@ -269,4 +269,6 @@ window.addEventListener('load', function() {
   clearLast.addEventListener('click', deleteLast)
   clearAll.addEventListener('click', deleteAll)
 
+  document.querySelector('#toggle').addEventListener('click', () => document.body.classList.toggle('mode__dark'));
+
 });
