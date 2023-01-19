@@ -149,10 +149,10 @@ window.addEventListener('load', function() {
     el.appendChild(saveBtn)
     saveBtn.addEventListener('click', saveTodo)
 
-    const deleteBtn = document.createElement('button')
-    deleteBtn.classList.add('deleteBtn')
-    el.appendChild(deleteBtn)
-    deleteBtn.addEventListener('click', deleteTodo)
+    // const deleteBtn = document.createElement('button')
+    // deleteBtn.classList.add('deleteBtn')
+    // el.appendChild(deleteBtn)
+    // deleteBtn.addEventListener('click', deleteTodo)
 
     const editInput = document.getElementById(idName)
     editInput.value = currentValue
@@ -179,7 +179,6 @@ window.addEventListener('load', function() {
     li.classList.remove('active')
     addBtns(li)
 
-    var index = Array.from(li.parentNode.children).indexOf(li)
     todoData[index].text = newValue
     localStorage.setItem('todos', JSON.stringify(todoData))
   }
@@ -221,7 +220,8 @@ window.addEventListener('load', function() {
     //   todoList.removeChild(todoList.firstChild);
     // }
     todoList.innerHTML = ''
-    localStorage.clear();
+    // localStorage.clear();
+    localStorage.removeItem('todos');
     window.location.reload(true); // bug fix
   }
 
